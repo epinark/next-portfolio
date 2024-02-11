@@ -48,6 +48,20 @@ const Navbar = () => {
     },
     opened: {
       x: 0,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.2,
+      },
+    },
+  };
+  const listItemVariants = {
+    closed: {
+      x: -10,
+      opacity: 0,
+    },
+    opened: {
+      x: 0,
+      opacity: 1,
     },
   };
   return (
@@ -95,17 +109,17 @@ const Navbar = () => {
           <motion.div
             variants={topVariants}
             className="w-10 h-1 bg-black rounded origin-left"
-            animate={open ? "opened" : closed}
+            animate={open ? "opened" : "closed"}
           ></motion.div>
           <motion.div
             variants={centerVariants}
             className="w-10 h-1 bg-black rounded"
-            animate={open ? "opened" : closed}
+            animate={open ? "opened" : "closed"}
           ></motion.div>
           <motion.div
             variants={bottomVariants}
             className="w-10 h-1 bg-black rounded origin-left"
-            animate={open ? "opened" : closed}
+            animate={open ? "opened" : "closed"}
           ></motion.div>
         </button>
         {/* Menu List */}
@@ -114,12 +128,14 @@ const Navbar = () => {
             variants={listVariants}
             initial="closed"
             animate="opened"
-            className="absolute top-0 left-0 w-screen h-screen bg-black text-white flex flex-col items-center justify-center gap-8 text-xl z-40"
+            className="absolute top-0 left-0 w-screen h-screen bg-black text-white flex flex-col items-center justify-center gap-8 text-4xl z-40"
           >
             {links.map((link) => (
-              <Link key={link.title} href={link.url}>
-                {link.title}
-              </Link>
+              <motion.div variants={listItemVariants} className="">
+                <Link key={link.title} href={link.url}>
+                  {link.title}
+                </Link>
+              </motion.div>
             ))}
           </motion.div>
         )}
